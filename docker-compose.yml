@@ -1,0 +1,22 @@
+version: '3.5'
+
+services:
+  automedia_jsonrpc:
+    build: ./automedia_jsonrpc
+    image: automedia_jsonrpc
+    container_name: automedia_jsonrpc
+    command: bash -c "python3 /app/server.py"
+    restart: unless-stopped
+    env_file:
+      - config/${ENVIRONMENT:-dev}/jsonrpc.env
+    ports:
+      - "${JSON_RPC_EXTERNAL_PORT:-11321}:11321"
+    volumes:
+      - automedia_vol_jsonrpc_data:/data
+      - automedia_vol_jsonrpc_logs:/logs
+
+volumes:
+  automedia_vol_jsonrpc_data:
+    driver: local
+  automedia_vol_jsonrpc_logs:
+    driver: local
