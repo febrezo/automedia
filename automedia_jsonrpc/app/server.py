@@ -23,7 +23,7 @@ import logging
 import json
 import threading
 import time
-import os 
+import os
 from jsonrpc import JSONRPCResponseManager, dispatcher
 
 from werkzeug.wrappers import Request, Response
@@ -34,6 +34,18 @@ import core.face_processor
 import core.metadata_processor
 import core.text_processor
 # import core.yolo_processor
+
+# Grabbing environment variables
+LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO")
+
+logging.basicConfig(
+    level=LOG_LEVEL,
+    format="[%(levelname)s] Automedia @ %(asctime)s | %(message)s",
+    handlers=[
+        logging.FileHandler(f'/log/automedia.log'),
+        logging.StreamHandler()
+    ]
+)
 
 
 @dispatcher.add_method
