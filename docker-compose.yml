@@ -13,7 +13,7 @@ services:
       - "${JSON_RPC_EXTERNAL_PORT:-11321}:11321"
     volumes:
       - automedia_vol_jsonrpc_data:/data
-      - automedia_vol_jsonrpc_logs:/logs
+      - automedia_vol_jsonrpc_logs:/log
 
 volumes:
   automedia_vol_jsonrpc_data:

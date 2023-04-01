@@ -26,7 +26,6 @@ import tempfile
 import uuid
 
 
-
 def extract_files_from_eml_file(file_path):
     """An internal function to extract images from local EML files
 
@@ -37,7 +36,7 @@ def extract_files_from_eml_file(file_path):
         file_path (str): The local path to the PDF file.
 
     Return:
-        list. List of extracted files.
+        dict. A dict containing the `path` for the original EML file and extracted files as `data`.
     """
     file_paths = []
     try:
@@ -67,7 +66,10 @@ def extract_files_from_eml_file(file_path):
     except IOError as _:
         logging.error(f"Problem with '{f.name}' or one of its attachments!")
         raise _
-    return file_paths
+    return {
+        "path": file_path,
+        "data": file_paths
+    }
 
 
 def extract_metadata_from_eml_file(file_path):
@@ -81,7 +83,7 @@ def extract_metadata_from_eml_file(file_path):
         file_path (str): The local path to the file.
 
     Return:
-        dict. Values are lists.
+        dict. A dict containing the `path` for the original EML file and `data` as a dict.
 
     Raises:
         OSError.
@@ -96,5 +98,8 @@ def extract_metadata_from_eml_file(file_path):
                 metadata[k] += f"\n{v}"
             else:
                 metadata[k] = v
-    return metadata
+    return {
+        "path": file_path,
+        "data": metadata
+    }
  

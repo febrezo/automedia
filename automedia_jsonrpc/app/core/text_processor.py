@@ -86,7 +86,10 @@ def extract_text_from_local_file(file_path):
     elif file_path.lower().endswith("docx"):
         return extract_text_from_docx_file(file_path)
     try: 
-        return gpyocr.tesseract_ocr(file_path)
+        return {
+            "path": file_path,
+            "data": gpyocr.tesseract_ocr(file_path)
+        }
     except RuntimeError as _:
         raise NotImplementedError(f"The text extraction for the file type of '{file_path}' has not been implemented")
 
@@ -170,6 +173,7 @@ def extract_regex_from_text(text, regex=None):
     if not isinstance(text, str):
         raise ValueError(f"String expected for the text to be analysed but '{text}' received")
     results = {}
+    
     if not regex:
         for label, regex in DEFINED_REGEX.items():
             results[label] = re.findall(regex, text)
@@ -177,4 +181,5 @@ def extract_regex_from_text(text, regex=None):
         if not isinstance(regex, str):
             raise ValueError(f"String expected for the regular expression but '{regex}' received")
         results["Custom Regex"] = re.findall(regex, text)
+    
     return results 

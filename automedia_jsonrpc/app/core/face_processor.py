@@ -47,7 +47,7 @@ def compare_faces(face_encoding_1, face_encoding_2):
         face_encoding_2 (str): The path to the first face.
 
     Returns:
-        float. The similarity between both faces
+        float. The similarity between both faces.
     """
     # Calculate distances
     new_numpy = np.array(face_encoding_2)
@@ -74,12 +74,11 @@ def extract_faces_from_local_file(image_path, with_encodings=True):
         with_encodings (bool): Whether to return the encodings. 
 
     Return:
-        list or dict. List of face_paths or dict of face_paths as keys with encodings as values.
+        list or dict. A dict containing either a list of face_paths or a dict of face_paths as keys with encodings as values.
 
     Raises:
         OSError.
     """
-
     logging.debug(f"Loading onto the face recognition engine the contents of '{image_path}'…")
     image_array = face_recognition.load_image_file(image_path)
     image = Image.fromarray(image_array)
@@ -125,9 +124,15 @@ def extract_faces_from_local_file(image_path, with_encodings=True):
             pathlib.Path(download_full_path).unlink()
 
     if with_encodings:
-        return extracted_faces
+        return {
+            "path": image_path,
+            "data": extracted_faces
+        }
     else:
-        return list(extracted_faces.keys())
+        return {
+            "path": image_path,
+            "data": list(extracted_faces.keys())
+        }
 
 
 @dispatcher.add_method

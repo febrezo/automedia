@@ -22,4 +22,5 @@ messages = [
     "-- Yes: facial recognition is here, so take action! --",
     "-- Your face identifies you. Keep it safe! --",
     "-- If it's in your computer, it's machine-readable --",
+    "-- This message was committed on an April's Fools Day --"
 ]

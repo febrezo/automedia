@@ -11,13 +11,16 @@ def extract_text_from_docx_file(file_path):
         file_path (str): The local path to the DOCX file.
 
     Return:
-        str. A string containing the text.
+        dict. A dict containing the string containing the text in the `data` attribute.
 
     Raises:
         OSError.
     """
     doc = docx.Document(file_path)
-    fullText = []
+    full_text = []
     for para in doc.paragraphs:
-        fullText.append(para.text)
-    return '\n'.join(fullText)
+        full_text.append(para.text)
+    return {
+        "path": file_path,
+        "data": '\n'.join(full_text)
+    }
