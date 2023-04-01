@@ -59,4 +59,7 @@ def extract_files_from_pst_file(file_path):
                 logging.info(f"Extracted file: {str(filename)}")
                 file_paths.append(str(filename))
 
-    return file_paths
+    return {
+        "path": file_path,
+        "data": file_paths
+    }

@@ -53,7 +53,10 @@ def extract_metadata_from_local_file(file_path):
     if file_path.lower().endswith("eml"):
         return extract_metadata_from_eml_file(file_path)
     else:
-        return extract_metadata(file_path)
+        return {
+            "path": file_path,
+            "data": extract_metadata(file_path)
+        }
 
 
 @dispatcher.add_method

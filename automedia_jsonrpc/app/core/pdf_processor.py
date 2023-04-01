@@ -34,7 +34,7 @@ def extract_text_from_pdf_file(file_path):
         file_path (str): The local path to the PDF file.
 
     Return:
-        str. A string containing the text.
+        dict. A dict containing the string containing the text in the `data` attribute.
 
     Raises:
         OSError.
@@ -43,7 +43,10 @@ def extract_text_from_pdf_file(file_path):
         text = ""
         for page in doc:  # iterate the document pages
             text += page.get_text().encode("utf8").decode() + "\n" # get plain text (is in UTF-8)
-    return text
+    return {
+        "path": file_path,
+        "data": text
+    }
 
 
 def extract_files_from_pdf_file(file_path):
@@ -58,7 +61,7 @@ def extract_files_from_pdf_file(file_path):
         file_path (str): The local path to the PDF file.
 
     Return:
-        list. List of extracted files.
+        dict. A dict containing the string containing the list of extracted files in the `data` attribute.
     """
     # Open the PDF file
     pdf_file = fitz.open(file_path)
@@ -68,6 +71,7 @@ def extract_files_from_pdf_file(file_path):
     os.mkdir(extraction_folder_name)
 
     file_paths = []
+    
     # Loop through each page of the PDF file
     for page_num in range(pdf_file.page_count):
         page = pdf_file[page_num]
@@ -88,4 +92,8 @@ def extract_files_from_pdf_file(file_path):
             pix = None
             logging.info(f"Extracted file: {extracted_file_path}")
             file_paths.append(extracted_file_path)
-    return file_paths
+    
+    return {
+        "path": file_path,
+        "data": file_paths
+    }
